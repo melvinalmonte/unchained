@@ -60,4 +60,5 @@ jobs:
     - name: adding poetry to path
       run: |
         echo "opt/pipx/venvs/poetry" >> $GITHUB_PATH
-        /opt/pipx_bin/poetry --version
+        ls -lah $HOME/.cache/pypoetry/
+        ls -lag $HOME/.cache/pypoetry/virtualenvs/
