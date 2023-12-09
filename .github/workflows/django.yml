@@ -57,15 +57,9 @@ jobs:
           /opt/pipx_bin/poetry
           /opt/pipx/venvs/poetry/bin/poetry
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    - name: foo
+    - name: adding poetry to path
       run: |
-        ls -lah $HOME/.cache/
-        echo "------------"
-        ls -lah /opt/pipx_bin/
-        echo "------------"
         echo "/opt/pipx_bin" >> $GITHUB_PATH
-        echo "------------"
-        which poetry
-    - name: bar
+    - name: test
       run: |
-        which poetry
+        poetry run ./manage.py test
