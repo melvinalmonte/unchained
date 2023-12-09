@@ -37,7 +37,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
       - name: poetry path
         run: |
-          which poetry    
+          ./opt/pipx/venvs/poetry/bin/poetry --version    
 
   test:
     needs: setup
@@ -66,4 +66,4 @@ jobs:
         echo "---"
         ls -la /opt/pipx/venvs/poetry/bin/
         echo "---"
-        ls -la /opt/pipx/venvs/poetry/bin/poetry
+        ./opt/pipx/venvs/poetry/bin/poetry --version
