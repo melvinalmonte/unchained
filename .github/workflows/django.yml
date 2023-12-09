@@ -8,7 +8,7 @@ on:
 
 env:
   PYTHON_VERSION: 3.11
-
+  
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -24,12 +24,16 @@ jobs:
       run: |
         pip install --upgrade pip
         pip install poetry
+        echo "POETRY_PATH=$(which poetry)" >> $GITHUB_ENV
+        echo "SITE_PACKAGES_PATH=$(python -c 'import site; print(site.getsitepackages()[0])')" >> $GITHUB_ENV
 
-    - name: Cache Poetry dependencies
+    - name: Cache Poetry installation and dependencies
       uses: actions/cache@v3
       with:
         path: |
           ~/.cache/pypoetry
+          ${{ env.POETRY_PATH }}
+          ${{ env.SITE_PACKAGES_PATH }}
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     
     - name: Install dependencies
@@ -93,6 +97,8 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
+          ${{ env.POETRY_PATH }}
+          ${{ env.SITE_PACKAGES_PATH }}
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Install Poetry
       run: pip install poetry
