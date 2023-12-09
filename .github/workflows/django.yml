@@ -25,9 +25,6 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
-          ~/.cache/pypoetry/virtualenvs
-          ~/.cache/pypoetry/cache
-          ~/.cache/pypoetry/artifacts
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
 
     - name: Install Poetry
@@ -52,14 +49,11 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
-          ~/.cache/pypoetry/virtualenvs
-          ~/.cache/pypoetry/cache
-          ~/.cache/pypoetry/artifacts
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     # - name: Install Poetry
     #   run: pip install poetry
     - name: Check Poetry
-      run: ls -lah $HOME/.cache/pypoetry/
+      run: ls -lah $HOME/.cache/pypoetry/virtualenvs
     # - name: Run Tests
     #   env:
     #     DJANGO_SETTINGS_MODULE: django_unchained.settings
@@ -84,7 +78,7 @@ jobs:
           ~/.cache/pypoetry/artifacts
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Check Poetry
-      run: ls -lah $HOME/.cache/pypoetry/
+      run: ls -lah $HOME/.cache/pypoetry/virtualenvs
     # - name: Install Poetry
     #   run: pip install poetry
     # - name: Run Tests 2
