@@ -44,6 +44,6 @@ jobs:
     - name: Run Tests
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
-      working-directory: ./
       run: |
-        ls -lah
+        which poetry
+        which python
