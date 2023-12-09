@@ -30,12 +30,12 @@ jobs:
 
     - name: Install Poetry
       run: |
-        pip install --upgrade pip
-        pip install poetry
+        python -m pip install --upgrade pip
+        python -m pip install poetry
 
     - name: Install dependencies
       run: |
-        poetry install
+        python -m poetry install
 
   test1:
     needs: setup
@@ -58,7 +58,9 @@ jobs:
     - name: Run Tests
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
-      run: poetry run ./manage.py test
+      run: |
+        python -m poetry run ./manage.py test
+
 
   test2:
     needs: setup
@@ -81,4 +83,6 @@ jobs:
     - name: Run Tests 2
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
-      run: poetry run ./manage.py test
+      run: |
+        python -m poetry run ./manage.py test
+        
