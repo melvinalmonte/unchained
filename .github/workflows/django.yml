@@ -62,4 +62,6 @@ jobs:
         echo "opt/pipx/venvs/poetry" >> $GITHUB_PATH
     - name: test
       run: |
-        poetry --version
+        ls -la /opt/pipx/venvs/poetry/
+        echo "---"
+        ls -la /opt/pipx/venvs/poetry/bin/
