@@ -18,11 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Installing poetry
-        run: pip install poetry
+        run: pipx install poetry
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'poetry'
       - name: Install dependencies
         run: poetry install
       - name: Caching dependencies
@@ -31,7 +32,8 @@ jobs:
         with:
           path: |
             ~/.cache/pypoetry
-            /opt/pipx/venvs/poetry
+            /opt/pipx_bin/poetry
+            /opt/pipx/venvs/poetry/bin/poetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
       - name: poetry path
         run: |
@@ -52,13 +54,12 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
-          /opt/pipx/venvs/poetry
+          /opt/pipx_bin/poetry
+          /opt/pipx/venvs/poetry/bin/poetry
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: adding poetry to path
       run: |
-        echo "/opt/pipx/venvs/poetry/bin" >> $GITHUB_PATH
+        echo "opt/pipx/venvs/poetry" >> $GITHUB_PATH
     - name: test
-      env:
-        DJANGO_SETTINGS_MODULE: django_unchained.settings
       run: |
-        poetry env list
+        which poetry
