@@ -19,6 +19,7 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
+        cache: poetry
     
     - name: Cache Poetry dependencies
       uses: actions/cache@v3
@@ -80,6 +81,8 @@ jobs:
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Check Poetry
       run: |
+        ls -lah $HOME/
+        echo "------------------"
         ls -lah $HOME/.cache/pypoetry
         echo "------------------"
         ls -lah $HOME/.cache/pypoetry/virtualenvs
