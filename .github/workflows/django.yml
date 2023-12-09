@@ -32,8 +32,10 @@ jobs:
         with:
           path: |
             ~/.cache/pypoetry
-            which poetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+      - name: poetry path
+        run: |
+          which poetry    
 
   test:
     needs: setup
@@ -52,4 +54,4 @@ jobs:
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: foo
       run: |
-        ls -lah $HOME/.cache #this should show our cached dependencies of our setup step
+        ls -lah $HOME/
