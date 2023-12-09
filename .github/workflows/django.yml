@@ -19,19 +19,19 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        cache: .poetry
+        cache: poetry
     
+    - name: Install Poetry
+      run: |
+        pip install --upgrade pip
+        pip install poetry
+
     - name: Cache Poetry dependencies
       uses: actions/cache@v3
       with:
         path: |
           ~/.cache/pypoetry
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-
-    - name: Install Poetry
-      run: |
-        pip install --upgrade pip
-        pip install poetry
 
     - name: Install dependencies
       run: poetry install
