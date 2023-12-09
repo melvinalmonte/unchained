@@ -58,3 +58,5 @@ jobs:
     - name: foo
       run: |
         ls -lah $HOME/.cache/
+        echo "------------"
+        ls -lah /opt/
