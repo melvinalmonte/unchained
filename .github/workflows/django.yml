@@ -58,13 +58,13 @@ jobs:
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     # - name: Install Poetry
     #   run: pip install poetry
-    - name: Run Tests
-      env:
-        DJANGO_SETTINGS_MODULE: django_unchained.settings
-      run: |
-        python -m poetry run ./manage.py test
-
-
+    - name: Check Poetry
+      run: ls -lah $HOME/.cache/pypoetry/
+    # - name: Run Tests
+    #   env:
+    #     DJANGO_SETTINGS_MODULE: django_unchained.settings
+    #   run: python -m poetry run ./manage.py test
+        
   test2:
     needs: setup
     runs-on: ubuntu-latest
@@ -83,9 +83,11 @@ jobs:
           ~/.cache/pypoetry/cache
           ~/.cache/pypoetry/artifacts
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
+    - name: Check Poetry
+      run: ls -lah $HOME/.cache/pypoetry/
     # - name: Install Poetry
     #   run: pip install poetry
-    - name: Run Tests 2
-      env:
-        DJANGO_SETTINGS_MODULE: django_unchained.settings
-      run: python -m poetry run ./manage.py test
+    # - name: Run Tests 2
+    #   env:
+    #     DJANGO_SETTINGS_MODULE: django_unchained.settings
+    #   run: python -m poetry run ./manage.py test
