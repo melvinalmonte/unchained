@@ -19,7 +19,6 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        cache: pypoetry
     
     - name: Cache Poetry dependencies
       uses: actions/cache@v3
@@ -46,7 +45,6 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        cache: poetry
     - name: Cache Poetry dependencies
       uses: actions/cache@v3
       with:
@@ -71,7 +69,6 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        cache: poetry
     - name: Cache Poetry dependencies
       uses: actions/cache@v3
       with:
@@ -79,7 +76,9 @@ jobs:
           ~/.cache/pypoetry
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Install Poetry
-      run: pip install poetry
+      run: |
+        pip install poetry
+        which poetry
     - name: Run Tests 2
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
