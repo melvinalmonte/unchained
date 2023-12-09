@@ -22,19 +22,8 @@ jobs:
     
     - name: Install Poetry
       run: |
-        pip install --upgrade pip
-        pip install poetry
-
-    - name: Cache Poetry
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.poetry
-        key: poetry
-    
-    - name: Add Poetry to $PATH
-      run: |
-        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+        pipx install --upgrade pip
+        pipx install poetry
 
     - name: Cache Poetry dependencies
       uses: actions/cache@v3
@@ -61,26 +50,12 @@ jobs:
         path: |
           ~/.cache/pypoetry
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    
-    - name: Cache Poetry
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.poetry
-        key: poetry
-    # - name: Install Poetry
-    #   run: pip install poetry
-    - name: Check Poetry
-      run: |
-        which poetry
-        echo "------------------"
-        ls -lah $HOME/
-        echo "------------------"
-        ls -lah $HOME/.cache/
-    # - name: Run Tests
-    #   env:
-    #     DJANGO_SETTINGS_MODULE: django_unchained.settings
-    #   run: python -m poetry run ./manage.py test
+    - name: Install Poetry
+      run: pip install poetry
+    - name: Run Tests
+      env:
+        DJANGO_SETTINGS_MODULE: django_unchained.settings
+      run: python -m poetry run ./manage.py test
         
   test2:
     needs: setup
@@ -97,18 +72,9 @@ jobs:
         path: |
           ~/.cache/pypoetry
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    - name: Check Poetry
-      run: |
-        ls -lah $HOME/
-        echo "------------------"
-        ls -lah $HOME/.cache/pypoetry
-        echo "------------------"
-        ls -lah $HOME/.cache/pypoetry/virtualenvs
-        echo "------------------"
-        ls -lah $HOME/.cache/pypoetry/cache
-    # - name: Install Poetry
-    #   run: pip install poetry
-    # - name: Run Tests 2
-    #   env:
-    #     DJANGO_SETTINGS_MODULE: django_unchained.settings
-    #   run: python -m poetry run ./manage.py test
+    - name: Install Poetry
+      run: pip install poetry
+    - name: Run Tests 2
+      env:
+        DJANGO_SETTINGS_MODULE: django_unchained.settings
+      run: python -m poetry run ./manage.py test
