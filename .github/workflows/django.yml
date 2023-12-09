@@ -79,7 +79,12 @@ jobs:
           ~/.cache/pypoetry/artifacts
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Check Poetry
-      run: ls -lah $HOME/.cache/pypoetry
+      run: |
+        ls -lah $HOME/.cache/pypoetry
+        echo "------------------"
+        ls -lah $HOME/.cache/pypoetry/virtualenvs
+        echo "------------------"
+        ls -lah $HOME/.cache/pypoetry/cache
     # - name: Install Poetry
     #   run: pip install poetry
     # - name: Run Tests 2
