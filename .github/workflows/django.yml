@@ -61,6 +61,7 @@ jobs:
       run: |
         echo "opt/pipx/venvs/poetry" >> $GITHUB_PATH
         ls -lah $HOME/.cache/pypoetry/
-        ls -lah $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11
+        echo "-----------------"
+        ls -lah $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/
 
       
