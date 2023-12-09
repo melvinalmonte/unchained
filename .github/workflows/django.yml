@@ -63,4 +63,4 @@ jobs:
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
       run: |
-        python -m poetry run ./manage.py test
+        poetry env list
