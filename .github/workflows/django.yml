@@ -38,6 +38,7 @@ jobs:
       - name: poetry path
         run: |
           which poetry
+          ./opt/pipx_bin/poetry --version
 #
 #  test:
 #    needs: setup
