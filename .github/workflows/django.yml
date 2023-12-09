@@ -31,7 +31,6 @@ jobs:
         with:
           path: |
             ~/.cache/pypoetry
-            /opt/pipx_bin/poetry
             /opt/pipx/venvs/poetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
       - name: poetry path
@@ -53,12 +52,11 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
-          /opt/pipx_bin/poetry
           /opt/pipx/venvs/poetry
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: adding poetry to path
       run: |
-        echo "/opt/pipx_bin" >> $GITHUB_PATH
+        echo "/opt/pipx/venvs/poetry/bin" >> $GITHUB_PATH
     - name: test
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
