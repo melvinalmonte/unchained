@@ -57,7 +57,15 @@ jobs:
           ${{ env.SITE_PACKAGES_PATH }}          
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Install Poetry
-      run: pip install poetry
+      run: |
+        if [ "${{ steps.cache-test.outputs.cache-hit }}" == "true" ]; then
+            echo "Cache hit, checking Poetry installation"
+            poetry --version || echo "Poetry not found in cache"
+        else
+            echo "Cache miss, installing Poetry"
+            pip install poetry
+        fi
+
     - name: Run Tests
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
