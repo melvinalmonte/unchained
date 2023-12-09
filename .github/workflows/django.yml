@@ -28,8 +28,7 @@ jobs:
         run: poetry install
       - name: Determine cache key
         id: cache-keys
-        run: echo "cache-key=$(echo ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }})" >> $GITHUB_ENV
- 
+        run: echo "::set-output name=key::$(echo ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }})" 
   test:
     needs: setup
     runs-on: ubuntu-latest
