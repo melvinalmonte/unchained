@@ -65,3 +65,5 @@ jobs:
         ls -la /opt/pipx/venvs/poetry/
         echo "---"
         ls -la /opt/pipx/venvs/poetry/bin/
+        echo "---"
+        ls -la /opt/pipx/venvs/poetry/bin/poetry
