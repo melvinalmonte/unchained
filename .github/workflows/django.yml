@@ -60,3 +60,5 @@ jobs:
         ls -lah $HOME/.cache/
         echo "------------"
         ls -lah /opt/pipx_bin/
+        echo "------------"
+        which poetry
