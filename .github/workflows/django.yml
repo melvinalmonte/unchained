@@ -37,33 +37,34 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
       - name: poetry path
         run: |
-          which poetry    
+          which poetry
+          /opt/pipx_bin/poetry --version
 
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        cache-dependency-path: '**/poetry.lock'
-    - name: Restore cache
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cache/pypoetry
-          /opt/pipx_bin/poetry
-          /opt/pipx/venvs/poetry/bin/poetry
-        key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    - name: adding poetry to path
-      run: |
-        echo "opt/pipx/venvs/poetry" >> $GITHUB_PATH
-    - name: test
-      run: |
-        ls -la /opt/pipx/venvs/poetry/
-        echo "---"
-        ls -la /opt/pipx/venvs/poetry/bin/
-        echo "---"
-        /opt/pipx/venvs/poetry/bin/poetry --version
+#  test:
+#    needs: setup
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v4
+#    - name: Set up Python ${{ env.PYTHON_VERSION }}
+#      uses: actions/setup-python@v4
+#      with:
+#        python-version: ${{ env.PYTHON_VERSION }}
+#        cache-dependency-path: '**/poetry.lock'
+#    - name: Restore cache
+#      uses: actions/cache@v3
+#      with:
+#        path: |
+#          ~/.cache/pypoetry
+#          /opt/pipx_bin/poetry
+#          /opt/pipx/venvs/poetry/bin/poetry
+#        key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+#    - name: adding poetry to path
+#      run: |
+#        echo "opt/pipx/venvs/poetry" >> $GITHUB_PATH
+#    - name: test
+#      run: |
+#        ls -la /opt/pipx/venvs/poetry/
+#        echo "---"
+#        ls -la /opt/pipx/venvs/poetry/bin/
+#        echo "---"
+#        /opt/pipx/venvs/poetry/bin/poetry --version
