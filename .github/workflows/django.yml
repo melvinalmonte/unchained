@@ -12,140 +12,21 @@ env:
 jobs:
   setup:
     runs-on: ubuntu-latest
-
+    outputs:
+      cache-key: ${{ steps.cache-keys.outputs.key }}
+    
     steps:
-    - uses: actions/checkout@v4
-    - name: Installing poetry
-      run: pipx install poetry
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        cache: 'poetry'
-    
-    # - name: Install Poetry
-    #   run: |
-    #     pip install --upgrade pip
-    #     pip install poetry
-    #     echo "POETRY_PATH=$(which poetry)" >> $GITHUB_ENV
-    #     echo "SITE_PACKAGES_PATH=$(python -c 'import site; print(site.getsitepackages()[0])')" >> $GITHUB_ENV
-
-    # - name: Cache Poetry installation and dependencies
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: |
-    #       ~/.cache/pypoetry
-    #       ${{ env.POETRY_PATH }}
-    #       ${{ env.SITE_PACKAGES_PATH }}
-    #     key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    
-    - name: Install dependencies
-      run: poetry install
-    
-  test1:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    - name: foo
-      run: |
-        ls -lah $HOME/.cache/
-    # - name: Cache Poetry dependencies
-    #   id: cache-test
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: |
-    #       ~/.cache/pypoetry
-    #       ${{ env.POETRY_PATH }}
-    #       ${{ env.SITE_PACKAGES_PATH }}          
-    #     key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    # - name: Install Poetry
-    #   run: |
-    #     if [ "${{ steps.cache-test.outputs.cache-hit }}" == "true" ]; then
-    #         echo "Cache hit, checking Poetry installation"
-    #         poetry --version || echo "Poetry not found in cache"
-    #     else
-    #         echo "Cache miss, installing Poetry"
-    #         pip install poetry
-    #     fi
-
-    # - name: Run Tests
-    #   env:
-    #     DJANGO_SETTINGS_MODULE: django_unchained.settings
-    #   run: python -m poetry run ./manage.py test
-        
-  # test2:
-  #   needs: setup
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Set up Python ${{ env.PYTHON_VERSION }}
-  #     uses: actions/setup-python@v4
-  #     with:
-  #       python-version: ${{ env.PYTHON_VERSION }}
-  #   - name: Cache Poetry dependencies
-  #     uses: actions/cache@v3
-  #     with:
-  #       path: |
-  #         ~/.cache/pypoetry
-  #         ${{ env.POETRY_PATH }}
-  #         ${{ env.SITE_PACKAGES_PATH }}          
-  #       key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-  #   - name: Install Poetry
-  #     run: pip install poetry
-  #   - name: Run Tests 2
-  #     env:
-  #       DJANGO_SETTINGS_MODULE: django_unchained.settings
-  #     run: python -m poetry run ./manage.py test
-
-  # test3:
-  #   needs: setup
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Set up Python ${{ env.PYTHON_VERSION }}
-  #     uses: actions/setup-python@v4
-  #     with:
-  #       python-version: ${{ env.PYTHON_VERSION }}
-  #   - name: Cache Poetry dependencies
-  #     uses: actions/cache@v3
-  #     with:
-  #       path: |
-  #         ~/.cache/pypoetry
-  #         ${{ env.POETRY_PATH }}
-  #         ${{ env.SITE_PACKAGES_PATH }}
-  #       key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-  #   - name: Install Poetry
-  #     run: pip install poetry
-  #   - name: Run Tests 2
-  #     env:
-  #       DJANGO_SETTINGS_MODULE: django_unchained.settings
-  #     run: python -m poetry run ./manage.py test
-
-  # test4:
-  #   needs: setup
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Set up Python ${{ env.PYTHON_VERSION }}
-  #     uses: actions/setup-python@v4
-  #     with:
-  #       python-version: ${{ env.PYTHON_VERSION }}
-  #   - name: Cache Poetry dependencies
-  #     uses: actions/cache@v3
-  #     with:
-  #       path: |
-  #         ~/.cache/pypoetry
-  #         ${{ env.POETRY_PATH }}
-  #         ${{ env.SITE_PACKAGES_PATH }}          
-  #       key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-  #   - name: Install Poetry
-  #     run: pip install poetry
-  #   - name: Run Tests 2
-  #     env:
-  #       DJANGO_SETTINGS_MODULE: django_unchained.settings
-  #     run: python -m poetry run ./manage.py test
+      - uses: actions/checkout@v4
+      - name: Installing poetry
+        run: pipx install poetry
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'poetry'
+      - name: Install dependencies
+        run: poetry install
+      - name: Determine cache key
+        id: cache-keys
+        run: echo "::set-output name=key::$(echo ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }})"
+  
