@@ -56,8 +56,8 @@ jobs:
           ~/.cache/pypoetry/cache
           ~/.cache/pypoetry/artifacts
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    - name: Install Poetry
-      run: pip install poetry
+    # - name: Install Poetry
+    #   run: pip install poetry
     - name: Run Tests
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
@@ -83,8 +83,8 @@ jobs:
           ~/.cache/pypoetry/cache
           ~/.cache/pypoetry/artifacts
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    - name: Install Poetry
-      run: pip install poetry
+    # - name: Install Poetry
+    #   run: pip install poetry
     - name: Run Tests 2
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
