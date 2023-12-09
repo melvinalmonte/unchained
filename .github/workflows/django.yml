@@ -53,6 +53,8 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
+          ${{ env.POETRY_PATH }}
+          ${{ env.SITE_PACKAGES_PATH }}          
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Install Poetry
       run: pip install poetry
@@ -75,6 +77,8 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
+          ${{ env.POETRY_PATH }}
+          ${{ env.SITE_PACKAGES_PATH }}          
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Install Poetry
       run: pip install poetry
@@ -121,6 +125,8 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
+          ${{ env.POETRY_PATH }}
+          ${{ env.SITE_PACKAGES_PATH }}          
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Install Poetry
       run: pip install poetry
