@@ -32,7 +32,7 @@ jobs:
         pip install --upgrade pip
         if ! command -v poetry &> /dev/null
         then
-            pip install poetry
+            pipx install poetry
         fi
   
     - name: Cache Poetry dependencies
@@ -72,7 +72,7 @@ jobs:
       run: |
         if ! command -v poetry &> /dev/null
         then
-            pip install poetry
+            pipx install poetry
         fi
     
     - name: Run Tests
