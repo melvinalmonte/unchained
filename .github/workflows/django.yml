@@ -53,14 +53,12 @@ jobs:
         path: |
           ~/.cache/pypoetry
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-    - name: Set Custom Python Path
-      run: |
-        ENV_PATH=$(find $HOME/.cache/pypoetry/virtualenvs -name 'python3' -path '*django-unchained-*-py3.11*' | head -n 1)
-        echo "ENV_PATH=${CUSTOM_PATH}" >> $GITHUB_ENV
-    - name: unit-test
+    - name: unit-tests
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
       run: |
-        ${{ env.ENV_PATH }} ./manage.py test
+        source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
+        echo "running unit tests"
+        python ./manage.py test
 
       
