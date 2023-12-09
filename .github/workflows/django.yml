@@ -61,5 +61,7 @@ jobs:
       run: |
         echo "/opt/pipx_bin" >> $GITHUB_PATH
     - name: test
+      env:
+        DJANGO_SETTINGS_MODULE: django_unchained.settings
       run: |
         poetry run ./manage.py test
