@@ -32,6 +32,7 @@ jobs:
         with:
           path: |
             ~/.cache/pypoetry
+            /opt/pipx_bin/poetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
       - name: poetry path
         run: |
@@ -50,7 +51,9 @@ jobs:
     - name: Restore cache
       uses: actions/cache@v3
       with:
-        path: ~/.cache/pypoetry
+        path: |
+          ~/.cache/pypoetry
+          /opt/pipx_bin/poetry
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: foo
       run: |
