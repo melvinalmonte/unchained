@@ -54,9 +54,7 @@ jobs:
     #   run: pip install poetry
     - name: Check Poetry
       run: |
-        ls -lah $HOME/.cache/pypoetry/virtualenvs
-        source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*/bin/activate
-        which poetry
+        ls -lah $HOME/
     # - name: Run Tests
     #   env:
     #     DJANGO_SETTINGS_MODULE: django_unchained.settings
