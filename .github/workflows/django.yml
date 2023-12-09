@@ -28,5 +28,24 @@ jobs:
         run: poetry install
       - name: Determine cache key
         id: cache-keys
-        run: echo "::set-output name=key::$(echo ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }})"
-  
+        run: echo "cache-key=$(echo ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }})" >> $GITHUB_ENV
+ 
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'poetry'
+        cache-dependency-path: '**/poetry.lock'
+    - name: Restore cache
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pypoetry
+        key: ${{ needs.setup.outputs.cache-key }}
+    - name: foo
+      run: |
+        ls -lah $HOME/.cache #this should show our cached dependencies of our setup step
