@@ -10,8 +10,7 @@ env:
   PYTHON_VERSION: 3.11
 
 jobs:
-  build:
-
+  setup:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,12 +39,22 @@ jobs:
       run: |
         python -m poetry install
 
+  test1:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
     - name: Run Tests
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
       run: |
         python -m poetry run ./manage.py test
 
+  test2:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
     - name: Run Tests 2
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
