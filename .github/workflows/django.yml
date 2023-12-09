@@ -32,7 +32,7 @@ jobs:
           path: |
             ~/.cache/pypoetry
             /opt/pipx_bin/poetry
-            /opt/pipx/venvs/poetry/bin/poetry
+            /opt/pipx/venvs
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
       - name: poetry path
         run: |
