@@ -32,8 +32,6 @@ jobs:
         with:
           path: |
             ~/.cache/pypoetry
-            /opt/pipx_bin/poetry
-            /opt/pipx/venvs/poetry/bin/poetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
       - name: poetry path
         run: |
@@ -54,16 +52,9 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
-          /opt/pipx_bin/poetry
-          /opt/pipx/venvs/poetry/bin/poetry
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: adding poetry to path
       run: |
-        echo "opt/pipx/venvs/poetry" >> $GITHUB_PATH
-        ls -lah $HOME/.cache/pypoetry/
-        echo "-----------------"
-        ls -lah $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/
-        echo "-----------------"
         $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/python3 ./manage.py test
 
       
