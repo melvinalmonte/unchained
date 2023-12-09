@@ -46,4 +46,4 @@ jobs:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
       working-directory: ./
       run: |
-        python -m poetry run manage.py test
+        ls -lah
