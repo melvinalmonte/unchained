@@ -51,7 +51,6 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        cache: 'poetry'
     - name: foo
       run: |
         ls -lah $HOME/.cache/
