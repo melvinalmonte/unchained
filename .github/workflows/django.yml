@@ -44,31 +44,41 @@ jobs:
     
     - name: Install dependencies
       run: poetry install
-    
-    - name: Foo
-      run: ls -lah $HOME/
 
-  # test1:
-  #   needs: setup
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Set up Python ${{ env.PYTHON_VERSION }}
-  #     uses: actions/setup-python@v4
-  #     with:
-  #       python-version: ${{ env.PYTHON_VERSION }}
-  #   - name: Cache Poetry dependencies
-  #     uses: actions/cache@v3
-  #     with:
-  #       path: |
-  #         ~/.cache/pypoetry
-  #       key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
-  #   - name: Install Poetry
-  #     run: pip install poetry
-  #   - name: Run Tests
-  #     env:
-  #       DJANGO_SETTINGS_MODULE: django_unchained.settings
-  #     run: python -m poetry run ./manage.py test
+  test1:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Cache Poetry CLI
+      uses: actions/cache@v3
+      with:
+        path: ~/.local/pipx/venvs/poetry
+        key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+    
+    - name: Cache Poetry dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pypoetry
+        key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
+   
+    - name: Install Poetry
+      run: |
+        if ! command -v poetry &> /dev/null
+        then
+            pip install poetry
+        fi
+    
+    - name: Run Tests
+      env:
+        DJANGO_SETTINGS_MODULE: django_unchained.settings
+      run: python -m poetry run ./manage.py test
         
   # test2:
   #   needs: setup
