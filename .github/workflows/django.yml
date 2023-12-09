@@ -59,4 +59,4 @@ jobs:
       run: |
         ls -lah $HOME/.cache/
         echo "------------"
-        ls -lah /opt/
+        ls -lah /opt/pipx_bin/
