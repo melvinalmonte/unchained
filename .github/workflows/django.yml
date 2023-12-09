@@ -60,8 +60,14 @@ jobs:
       with:
         path: |
           ~/.cache/pypoetry
-          ~/.poetry
         key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
+    
+    - name: Cache Poetry
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.poetry
+        key: poetry
     # - name: Install Poetry
     #   run: pip install poetry
     - name: Check Poetry
