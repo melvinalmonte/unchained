@@ -62,4 +62,4 @@ jobs:
         echo "opt/pipx/venvs/poetry" >> $GITHUB_PATH
     - name: test
       run: |
-        which poetry
+        poetry --version
