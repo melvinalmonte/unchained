@@ -57,4 +57,4 @@ jobs:
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: foo
       run: |
-        ls -lah $HOME/
+        ls -lah $HOME/.cache/
