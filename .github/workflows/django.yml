@@ -72,6 +72,8 @@ jobs:
     #   run: pip install poetry
     - name: Check Poetry
       run: |
+        which poetry
+        echo "------------------"
         ls -lah $HOME/
         echo "------------------"
         ls -lah $HOME/.cache/
