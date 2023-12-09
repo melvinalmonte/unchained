@@ -16,14 +16,25 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        cache: 'poetry'
+
+    - name: Cache Poetry
+      uses: actions/cache@v3
+      with:
+        path: ~/.local/pipx/venvs/poetry
+        key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+  
     
     - name: Install Poetry
-      run: pipx install poetry
-
+      run: |
+        pip install --upgrade pip
+        if ! command -v poetry &> /dev/null
+        then
+            pip install poetry
+        fi
+  
     - name: Cache Poetry dependencies
       uses: actions/cache@v3
       with:
