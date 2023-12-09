@@ -20,24 +20,23 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
     
-    - name: Prepare dependencies
+    - name: Cache Poetry dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pypoetry
+          ~/.cache/pypoetry/virtualenvs
+          ~/.cache/pypoetry/cache
+          ~/.cache/pypoetry/artifacts
+        key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
+
+    - name: Install Poetry
       run: |
         python -m pip install --upgrade pip
         python -m pip install poetry
-    
-    - name: Configure poetry
-      run: |
-        python -m poetry config virtualenvs.in-project true
-
-    - name: Cache the virtualenv
-      uses: actions/cache@v3
-      with:
-        path: ./.venv
-        key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}    
 
     - name: Install dependencies
-      run: |
-        python -m poetry install
+      run: poetry install
 
   test1:
     needs: setup
@@ -48,16 +47,23 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
+    - name: Cache Poetry dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pypoetry
+          ~/.cache/pypoetry/virtualenvs
+          ~/.cache/pypoetry/cache
+          ~/.cache/pypoetry/artifacts
+        key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Install Poetry
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install poetry
+      run: pip install poetry
     - name: Run Tests
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
       run: |
-        python -m poetry install
         python -m poetry run ./manage.py test
+
 
   test2:
     needs: setup
@@ -68,13 +74,18 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
+    - name: Cache Poetry dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pypoetry
+          ~/.cache/pypoetry/virtualenvs
+          ~/.cache/pypoetry/cache
+          ~/.cache/pypoetry/artifacts
+        key: ${{ runner.os }}-python-${{ env.PYTHON_VERSION }}-poetry-${{ hashFiles('**/poetry.lock') }}
     - name: Install Poetry
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install poetry
+      run: pip install poetry
     - name: Run Tests 2
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
-      run: |
-        python -m poetry install
-        python -m poetry run ./manage.py test
+      run: python -m poetry run ./manage.py test
