@@ -32,6 +32,9 @@ jobs:
     
     - name: Install dependencies
       run: poetry install
+    
+    - name: Foo
+      run: ls -lah $HOME/
 
   # test1:
   #   needs: setup
