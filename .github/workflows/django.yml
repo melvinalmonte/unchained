@@ -62,6 +62,6 @@ jobs:
         run: echo "$HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin" >> $GITHUB_PATH
     - name: run tests
       run: |
-        python3 run pytest
+        python3 ./manage.py test
 
       
