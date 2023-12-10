@@ -53,8 +53,6 @@ jobs:
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
 
     - name: Checking formatting
-      env:
-        DJANGO_SETTINGS_MODULE: django_unchained.settings
       run: |
         echo "Activating virtual environment"
         source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
@@ -81,8 +79,6 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
 
       - name: Checking linter
-        env:
-          DJANGO_SETTINGS_MODULE: django_unchained.settings
         run: |
           echo "Activating virtual environment"
           source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
