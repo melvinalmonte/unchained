@@ -58,7 +58,7 @@ jobs:
         source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
         
         echo Running black formatter check"
-        python -m black --check .
+        black --check .
 
   lint:
     needs: setup
