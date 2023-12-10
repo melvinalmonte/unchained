@@ -34,6 +34,32 @@ jobs:
             ~/.cache/pypoetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
 
+  format:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setting up Python v${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache-dependency-path: '**/poetry.lock'
+
+      - name: Restoring cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Checking formatter
+        run: |
+          echo "Activating virtual environment"
+          source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
+
+          echo "Running black formatter"
+          python -m black --check .
+
   lint:
     needs: setup
     runs-on: ubuntu-latest
