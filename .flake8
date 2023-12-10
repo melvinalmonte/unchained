@@ -1,0 +1,28 @@
+[flake8]
+# Base flake8 configuration:
+
+# E501: line too long (82 > 79 characters)
+# E203: whitespace before ':'
+# W503: line break before binary operator
+ignore = E501, E203, W503
+
+# Set the maximum allowed complexity for a block of code
+max-complexity = 10
+
+# Set maximum line length for consistency with Black
+max-line-length = 88
+
+# Exclude some directories from being checked
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    venv
+
+# Set the paths to be checked
+# Leave blank to check all
+filename = *.py
+
+# Plugins
+# Add flake8 plugins here if any, e.g., flake8-docstrings
