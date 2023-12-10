@@ -34,7 +34,7 @@ jobs:
             ~/.cache/pypoetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
 
-  test1:
+  format:
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -52,17 +52,45 @@ jobs:
           ~/.cache/pypoetry
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
 
-    - name: Running unit tests
+    - name: Checking formatting
       env:
         DJANGO_SETTINGS_MODULE: django_unchained.settings
       run: |
         echo "Activating virtual environment"
         source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
         
-        echo "running unit tests"
-        python ./manage.py test
+        echo Running black formatter check"
+        python -m black --check .
 
-  test2:
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setting up Python v${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache-dependency-path: '**/poetry.lock'
+
+      - name: Restoring cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Checking linter
+        env:
+          DJANGO_SETTINGS_MODULE: django_unchained.settings
+        run: |
+          echo "Activating virtual environment"
+          source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
+          
+          echo "Running flake8 linter"
+          python -m flake8
+
+  test:
     needs: setup
     runs-on: ubuntu-latest
     steps:
@@ -87,61 +115,5 @@ jobs:
           echo "Activating virtual environment"
           source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
           
-          echo "running unit tests"
-          python ./manage.py test
-
-  test3:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setting up Python v${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache-dependency-path: '**/poetry.lock'
-
-      - name: Restoring cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/pypoetry
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-
-      - name: Running unit tests
-        env:
-          DJANGO_SETTINGS_MODULE: django_unchained.settings
-        run: |
-          echo "Activating virtual environment"
-          source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
-          
-          echo "running unit tests"
-          python ./manage.py test
-
-  test4:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setting up Python v${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache-dependency-path: '**/poetry.lock'
-
-      - name: Restoring cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/pypoetry
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-
-      - name: Running unit tests
-        env:
-          DJANGO_SETTINGS_MODULE: django_unchained.settings
-        run: |
-          echo "Activating virtual environment"
-          source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
-          
-          echo "running unit tests"
+          echo "Running unit tests"
           python ./manage.py test
