@@ -55,7 +55,7 @@ jobs:
       - name: Checking formatter
         run: |
           echo "Activating virtual environment"
-          source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py3.11/bin/activate
+          source $HOME/.cache/pypoetry/virtualenvs/django-unchained-*-py$PYTHON_VERSION/bin/activate
 
           echo "Running black formatter"
           python -m black --check .
